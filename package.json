@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "pixi-projection": "^0.2.2",
     "pixi.js": "^4.8.2",
     "react": "^16.6.1",
     "react-dom": "^16.6.1",
