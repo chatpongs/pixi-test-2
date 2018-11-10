@@ -1,26 +1,30 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Application, Rectangle, Sprite, Texture, extras } from 'pixi.js';
 
 class App extends Component {
+  componentDidMount() {
+    this.app = new Application({ width: 800, height: 600 });
+    this.container.appendChild(this.app.view);
+
+    const sheet = Texture.fromImage('images/character.png');
+    const frameWidth = 400;
+    const frameHeight = 600;
+    const row = 1;
+    const rects = [0, 1, 2, 3].map(index =>
+      new Rectangle(index * frameWidth, frameHeight * row, frameWidth, frameHeight)
+    );
+    const frames = rects.map(rect => new Texture(sheet, rect));
+    const character = new extras.AnimatedSprite(frames);
+    character.anchor.set(0.5, 0.5);
+    character.scale.set(0.4, 0.4)
+    character.animationSpeed = 0.2;
+    character.position.set(this.app.screen.width / 2, this.app.screen.height - 150);
+    character.play();
+    this.app.stage.addChild(character);
+  }
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <div ref={r => this.container = r} />
     );
   }
 }
